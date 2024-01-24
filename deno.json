@@ -1,0 +1,27 @@
+{
+  "imports": {
+  },
+  "tasks": {
+    "dev": "deno run --watch main.ts"
+  },
+  "lint": {
+    "include": ["src/"],
+    "rules": {
+    "include": ["no-await-in-sync-fn", "no-class-assign"]
+    }
+  },
+  "fmt": {
+    "semiColons": true,
+    "singleQuote": true,
+    "useTabs": true,
+    "lineWidth": 80
+  },
+  "compilerOptions": {
+    "strict": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true
+  }
+}
