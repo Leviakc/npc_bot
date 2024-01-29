@@ -1,7 +1,9 @@
 import { Client, Events, GatewayIntentBits } from "discord.js";
 import { config } from "./config/config.ts";
-import { roseResource, zapResource } from "./voice/resources.ts";
+// import { roseResource, zapResource } from "./voice/resources.ts";
 import { connectToChannel, playSong, player } from "./voice/voice.ts";
+import { createResource } from "./voice/resources.ts";
+// import { AudioPlayerStatus } from "@discordjs/voice";
 
 const client = new Client({
   intents: [
@@ -9,15 +11,19 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildVoiceStates,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
+
+let roseResource = createResource("rosa.ogg", "Una rosa");
+
+let zapResource = createResource("me-electrocutaste.ogg", "Me electrocutaste");
 
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Ready! Logged in as ${readyClient.user.tag}`);
 });
 
 client.on(Events.ClientReady, async () => {
-  console.log("Discord.js client is ready");
   try {
     await playSong(roseResource);
     console.log("Song is ready to play!");
@@ -39,14 +45,14 @@ client.on(Events.MessageCreate, async (message) => {
         player.play(roseResource);
         const connection = await connectToChannel(channel);
         connection.subscribe(player);
-        await message.reply("Playing now!");
+        roseResource = createResource("rosa.ogg", "Una rosa");
+        await message.reply("Gracias por tu rosa!");
       } catch (error) {
         console.error(error);
       }
     } else {
       void message.reply("Join a voice channel then try again!");
     }
-    await message.reply("Una rosa");
   }
 
   if (message.content === "⚡") {
@@ -58,15 +64,23 @@ client.on(Events.MessageCreate, async (message) => {
         const connection = await connectToChannel(channel);
 
         connection.subscribe(player);
-        await message.reply("Playing now!");
+        await message.reply("¡Me electrocutaste!");
+
+        zapResource = createResource(
+          "me-electrocutaste.ogg",
+          "Me electrocutaste"
+        );
       } catch (error) {
         console.error(error);
       }
     } else {
       void message.reply("Join a voice channel then try again!");
     }
-    await message.reply("Zap");
   }
+});
+
+player.on("error", (error) => {
+  console.error(error);
 });
 
 // Log in to Discord with your client's token

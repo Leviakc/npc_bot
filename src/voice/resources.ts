@@ -1,24 +1,13 @@
 import * as path from "https://deno.land/std@0.207.0/path/mod.ts";
 import { StreamType, createAudioResource } from "@discordjs/voice";
 
-const __dirname = new URL("../assets", import.meta.url).pathname;
+const __dirname = new URL("../../assets", import.meta.url).pathname;
 
-export const roseResource = createAudioResource(
-  path.join(__dirname, "rosa.ogg"),
-  {
+export const createResource = (name: string, title: string) => {
+  return createAudioResource(path.join(__dirname, name), {
     inputType: StreamType.OggOpus,
     metadata: {
-      title: "Una rosa",
+      title: title,
     },
-  }
-);
-
-export const zapResource = createAudioResource(
-  path.join(__dirname, "me-electrocutaste.ogg"),
-  {
-    inputType: StreamType.OggOpus,
-    metadata: {
-      title: "Me electrocutaste",
-    },
-  }
-);
+  });
+};
