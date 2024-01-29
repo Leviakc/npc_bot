@@ -1,5 +1,8 @@
 {
   "imports": {
+    "discord.js": "npm:discord.js",
+    "@discordjs/voice": "npm:@discordjs/voice",
+    "discord-api-types/v10": "npm:discord-api-types/v10"
   },
   "tasks": {
     "dev": "deno run --watch main.ts"
@@ -7,7 +10,12 @@
   "lint": {
     "include": ["src/"],
     "rules": {
-    "include": ["no-await-in-sync-fn", "no-class-assign"]
+      "include": [
+        "no-await-in-sync-fn",
+        "no-class-assign",
+        "no-empty",
+        "require-await"
+      ]
     }
   },
   "fmt": {
@@ -18,6 +26,7 @@
   },
   "compilerOptions": {
     "strict": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "noUncheckedIndexedAccess": true,
