@@ -1,6 +1,6 @@
 import { load } from "https://deno.land/std@0.213.0/dotenv/mod.ts";
 
-await load({ export: true });
+await load({ export: true, allowEmptyValues: true });
 const discord_token = Deno.env.get("DISCORD_TOKEN");
 
 if (!discord_token) {
